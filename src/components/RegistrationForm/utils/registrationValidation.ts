@@ -1,12 +1,12 @@
 import * as Yup from 'yup'
 
 export const registrationValidation = Yup.object().shape({
-	email: Yup.string().required('Email is required').email('Not valid email'),
+	email: Yup.string().required("Електронна адреса обов'язкова").email('Введіть коректну електронну адресу'),
 	password: Yup.string()
-		.required('Password is required')
-		.min(6, 'Min password length is 6')
-		.max(20, 'Max password length is 20'),
+		.required("Пароль обов'язковий")
+		.min(6, 'Мінімальна довжина паролю 6 символів')
+		.max(20, 'Максимальна довжина паролю 20 символів'),
 	confirmPassword: Yup.string()
 		.required('Confirm password is required')
-		.oneOf([Yup.ref('password')], 'Passwords must match'),
+		.oneOf([Yup.ref('password')], 'Паролі не співпадають'),
 })

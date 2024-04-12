@@ -17,28 +17,28 @@ export const RegistrationForm = () => {
 	return (
 		<Form onSubmit={handleSubmit(onSubmit)}>
 			<FormControl isInvalid={!!errors.email}>
-				<Input placeholder='Email' type='email' {...register('email')} />
+				<Input placeholder='Електронна адреса' type='email' {...register('email')} />
 				<FormError message={errors.email?.message} />
 			</FormControl>
 
 			<FormControl isInvalid={!!errors.password}>
-				<Input placeholder='Password' type='password' {...register('password')} />
+				<Input placeholder='Пароль' type='password' {...register('password')} />
 				<FormError message={errors.password?.message} />
 			</FormControl>
 
 			<FormControl isInvalid={!!errors.confirmPassword}>
-				<Input placeholder='Confirm Password' type='password' {...register('confirmPassword')} />
+				<Input placeholder='Повторіть пароль' type='password' {...register('confirmPassword')} />
 				<FormError message={errors.confirmPassword?.message} />
 			</FormControl>
 
 			<Button
 				disabled={!isValid}
 				isLoading={false}
-				loadingText='Submitting'
+				loadingText='Чекайте...'
 				colorScheme={COLOR_THEME}
 				variant='solid'
 			>
-				Submit
+				Зареєструватися
 			</Button>
 		</Form>
 	)
