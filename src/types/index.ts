@@ -1,5 +1,5 @@
 export type User = {
-	id: string
+	id: number
 	email: string
 	/**
 	 * user name is a email part before '@'

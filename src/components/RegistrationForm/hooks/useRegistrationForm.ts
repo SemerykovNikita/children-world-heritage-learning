@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { User } from '../../../types/index'
 import { registrationValidation } from '../utils/registrationValidation'
 
-type RegistrationForm = Omit<User, 'id' | 'username'> & {
+export type RegistrationForm = Omit<User, 'id' | 'username'> & {
 	confirmPassword: string
 }
 
