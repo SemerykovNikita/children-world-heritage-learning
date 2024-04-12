@@ -1,6 +1,6 @@
 import { Box, Container, Flex, Heading, Link } from '@chakra-ui/react'
 import { Link as ReactRouterLink } from 'react-router-dom'
-import { ButtonLink } from '../../components/ButtonLink/index'
+import { ButtonLink } from '../../components/ui/ButtonLink/index'
 import { PRIMARY_COLOR } from '../../styles'
 
 export const Header = () => {

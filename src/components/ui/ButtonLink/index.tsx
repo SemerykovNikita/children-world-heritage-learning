@@ -1,7 +1,7 @@
 import { Button, ButtonProps, Link } from '@chakra-ui/react'
 import { ButtonHTMLAttributes } from 'react'
 import { Link as ReactRouterLink } from 'react-router-dom'
-import { COLOR_THEME } from '../../styles'
+import { COLOR_THEME } from '../../../styles'
 
 type Props = {
 	children: React.ReactNode
