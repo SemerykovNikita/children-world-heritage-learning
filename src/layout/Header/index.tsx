@@ -1,9 +1,28 @@
-import { Box, Container, Flex, Heading, Link } from '@chakra-ui/react'
-import { Link as ReactRouterLink } from 'react-router-dom'
+import { Box, Button, Container, Flex, Heading, Link } from '@chakra-ui/react'
+import { Link as ReactRouterLink, useNavigate } from 'react-router-dom'
+import { useShallow } from 'zustand/react/shallow'
 import { ButtonLink } from '../../components/ui/ButtonLink/index'
+import { useUserStore } from '../../store/user'
 import { PRIMARY_COLOR } from '../../styles'
 
 export const Header = () => {
+	const navigate = useNavigate()
+
+	const { isCheckingAuthFinished, isAuthenticated, isLoading, logout } = useUserStore(
+		useShallow((state) => ({
+			isCheckingAuthFinished: state.isCheckingAuthFinished,
+			isAuthenticated: state.isAuthenticated,
+			isLoading: state.isLoading,
+			logout: state.logout,
+			user: state.user,
+		})),
+	)
+
+	const handleLogout = () => {
+		logout()
+		navigate('/')
+	}
+
 	return (
 		<Box bgColor={PRIMARY_COLOR} paddingBlock={3} as='header'>
 			<Container maxW='container.xl'>
@@ -16,14 +35,24 @@ export const Header = () => {
 						</Link>
 					</Box>
 					<Box>
-						<Flex alignItems='center' gap={2}>
-							<ButtonLink to='/' colorScheme={'gray'}>
-								Ввійти
-							</ButtonLink>
-							<ButtonLink colorScheme={'gray'} to='/'>
-								Реєстрація
-							</ButtonLink>
-						</Flex>
+						{isLoading || !isCheckingAuthFinished ? (
+							''
+						) : isAuthenticated ? (
+							<div className='flex items-center gap-3'>
+								<Button onClick={handleLogout} type={'button'}>
+									Вийти
+								</Button>
+							</div>
+						) : (
+							<Flex alignItems='center' gap={2}>
+								<ButtonLink to='/login' colorScheme={'gray'}>
+									Ввійти
+								</ButtonLink>
+								<ButtonLink colorScheme={'gray'} to='/register'>
+									Реєстрація
+								</ButtonLink>
+							</Flex>
+						)}
 					</Box>
 				</Flex>
 			</Container>

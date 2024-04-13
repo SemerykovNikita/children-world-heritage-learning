@@ -9,29 +9,24 @@ import { useUserStore } from '../../store/user'
 import { COLOR_THEME } from '../../styles/index'
 import { Form } from '../ui/Form/index'
 import FormError from '../ui/FormError/index'
-import { RegistrationForm as RegistrationFormType, useRegistrationForm } from './hooks/useRegistrationForm'
-import { generateUsername } from './utils/generateUsername'
+import { LoginForm as LoginFormType, useLoginForm } from './hooks/useLoginForm'
 
-export const RegistrationForm = () => {
+export const LoginForm = () => {
 	const navigate = useNavigate()
 
 	const showSuccessToast = useSuccessToast({
-		title: 'Реєстрація пройшла успішно',
+		title: 'Ви успішно ввійшли',
 	})
 
 	const showErrorToast = useErrorToast()
 
-	const {
-		user,
-		error,
-		register: createUser,
-		isLoading,
-	} = useUserStore(
+	const { error, user, isLoading, login } = useUserStore(
 		useShallow((state) => ({
 			error: state.error,
 			register: state.register,
 			user: state.user,
 			isLoading: state.isLoading,
+			login: state.login,
 		})),
 	)
 
@@ -40,12 +35,12 @@ export const RegistrationForm = () => {
 		handleSubmit,
 		reset,
 		formState: { errors, isValid },
-	} = useRegistrationForm()
+	} = useLoginForm()
 
 	useEffect(() => {
 		if (!error) return
 
-		showErrorToast(error)
+		showErrorToast?.(error)
 	}, [error, showErrorToast])
 
 	useEffect(() => {
@@ -58,13 +53,7 @@ export const RegistrationForm = () => {
 		navigate('/')
 	}, [navigate, reset, showSuccessToast, user])
 
-	const onSubmit: SubmitHandler<RegistrationFormType> = ({ email, password }) => {
-		createUser({
-			email,
-			password,
-			username: generateUsername(email),
-		})
-	}
+	const onSubmit: SubmitHandler<LoginFormType> = ({ email, password }) => login({ email, password })
 
 	return (
 		<Form onSubmit={handleSubmit(onSubmit)}>
@@ -78,11 +67,6 @@ export const RegistrationForm = () => {
 				<FormError message={errors.password?.message} />
 			</FormControl>
 
-			<FormControl isInvalid={!!errors.confirmPassword}>
-				<Input placeholder='Повторіть пароль' type='password' {...register('confirmPassword')} />
-				<FormError message={errors.confirmPassword?.message} />
-			</FormControl>
-
 			<Button
 				type='submit'
 				disabled={!isValid}
@@ -91,7 +75,7 @@ export const RegistrationForm = () => {
 				colorScheme={COLOR_THEME}
 				variant='solid'
 			>
-				Зареєструватися
+				Ввійти
 			</Button>
 		</Form>
 	)

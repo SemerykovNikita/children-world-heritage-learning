@@ -11,7 +11,7 @@ type UserStore = {
 	saveUserAndAuthenticate: (user: User) => void
 	setIsCheckingAuthFinished: (isFinished: boolean) => void
 	register: (user: Omit<User, 'id'>) => void
-	login: (user: Omit<User, 'id'>) => void
+	login: (user: Omit<User, 'id' | 'username'>) => void
 	logout: () => void
 }
 
@@ -72,7 +72,7 @@ export const useUserStore = create<UserStore>((set) => ({
 			set({ isLoading: false })
 		}
 	},
-	login: async (user: Omit<User, 'id'>) => {
+	login: async (user: Omit<User, 'id' | 'username'>) => {
 		set({ isLoading: true })
 		try {
 			const candidate = await getByEmailAndPassword(user.email, user.password)
