@@ -1,10 +1,14 @@
 import { Box, Flex, Heading, Image, Link, Text } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useShallow } from 'zustand/react/shallow'
+import { ButtonLink } from '../../components/ui/ButtonLink/index'
 import { Loader } from '../../components/ui/Loader/index'
 import { useErrorToast } from '../../hooks/useErrorToast'
 import { useQueryHeritage } from '../../queries/heritage'
 import { useQueryUser } from '../../queries/user'
+import { useUserStore } from '../../store/user'
+import { COLOR_THEME } from '../../styles/index'
 import { getFormattedDate } from '../../utils/date'
 import { NotFoundPage } from '../NotFound/index'
 
@@ -14,6 +18,12 @@ export const HeritagePage = () => {
 	const showErrorToast = useErrorToast({
 		title: 'Помилка завантаження. Спробуйте пізніше.',
 	})
+
+	const { isAuthenticated } = useUserStore(
+		useShallow((state) => ({
+			isAuthenticated: state.isAuthenticated,
+		})),
+	)
 
 	const navigate = useNavigate()
 
@@ -38,15 +48,20 @@ export const HeritagePage = () => {
 	if (!heritage || !user) return <NotFoundPage />
 
 	const { username, email } = user
-	const { dateOfCreation, description, imageBlob, title } = heritage
+	const { dateOfCreation, description, imageBlob, title, id } = heritage
 
 	return (
 		<Box>
-			<Box>
+			<Flex alignItems={'center'} gap={10}>
 				<Heading>{title}</Heading>
-			</Box>
+				{isAuthenticated && (
+					<ButtonLink to={`/edit-heritage/${id}`} colorScheme={COLOR_THEME}>
+						Редагувати
+					</ButtonLink>
+				)}
+			</Flex>
 			<Flex gap={5} marginTop={7} alignItems={'flex-start'}>
-				<Box height={'100%'}>
+				<Box height={'100%'} border={'1px solid #bbb'} borderRadius={15} p={3}>
 					<Image
 						maxH={'300px'}
 						objectFit='contain'

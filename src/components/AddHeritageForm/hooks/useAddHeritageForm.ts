@@ -11,7 +11,4 @@ export const useAddHeritageForm = () =>
 	useForm<HeritageForm>({
 		mode: 'onChange',
 		resolver: yupResolver(addHeritageValidation),
-		defaultValues: {
-			userId: 1,
-		},
 	})

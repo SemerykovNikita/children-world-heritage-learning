@@ -1,5 +1,6 @@
 import { Route } from 'react-router-dom'
 import { AddHeritagePage } from '../pages/AddHeritage/index'
+import { EditHeritagePage } from '../pages/EditHeritage/index'
 import { HeritagePage } from '../pages/Heritage/index'
 import { HomePage } from '../pages/Home/index'
 import { LoginPage } from '../pages/Login/index'
@@ -38,6 +39,14 @@ const Router = () => {
 				}
 			/>
 			<Route path='heritages/:id' element={<HeritagePage />} />
+			<Route
+				path='edit-heritage/:id'
+				element={
+					<AuthRoute>
+						<EditHeritagePage />
+					</AuthRoute>
+				}
+			/>
 
 			<Route path='*' element={<NotFoundPage />} />
 		</BaseRoute>
