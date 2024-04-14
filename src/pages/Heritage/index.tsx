@@ -47,7 +47,14 @@ export const HeritagePage = () => {
 			</Box>
 			<Flex gap={5} marginTop={7} alignItems={'flex-start'}>
 				<Box height={'100%'}>
-					<Image objectFit='contain' borderRadius={15} width={'300px'} src={imageBlob} alt={title} />
+					<Image
+						maxH={'300px'}
+						objectFit='contain'
+						borderRadius={15}
+						width={'300px'}
+						src={imageBlob}
+						alt={title}
+					/>
 				</Box>
 				<Text fontSize='lg'>{description}</Text>
 			</Flex>
