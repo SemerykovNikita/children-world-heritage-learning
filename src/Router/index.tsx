@@ -1,4 +1,5 @@
 import { Route } from 'react-router-dom'
+import { AddHeritagePage } from '../pages/AddHeritage/index'
 import { HomePage } from '../pages/Home/index'
 import { LoginPage } from '../pages/Login/index'
 import { RegisterPage } from '../pages/Register/index'
@@ -30,7 +31,7 @@ const Router = () => {
 				path='add-heritage'
 				element={
 					<AuthRoute>
-						<h1>hello</h1>
+						<AddHeritagePage />
 					</AuthRoute>
 				}
 			/>
