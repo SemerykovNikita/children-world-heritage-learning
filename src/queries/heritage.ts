@@ -9,7 +9,7 @@ import {
 import { AxiosError } from 'axios'
 import axios from '../http/index'
 import { Heritage } from '../types/index'
-import { CREATE_HERITAGE, QUERY_HERITAGE, QUERY_HERITAGES } from './queryKeys'
+import { CREATE_HERITAGE, DELETE_HERITAGE, QUERY_HERITAGE, QUERY_HERITAGES } from './queryKeys'
 
 const URL = '/heritages'
 
@@ -23,6 +23,7 @@ export const useAddHeritage = (options?: UseMutationOptions<void, AxiosError, He
 	const queryClient = useQueryClient()
 
 	return useMutation({
+		...options,
 		mutationKey: [CREATE_HERITAGE],
 		mutationFn: addHeritage,
 		onSuccess: async (...params) => {
@@ -30,7 +31,6 @@ export const useAddHeritage = (options?: UseMutationOptions<void, AxiosError, He
 
 			await queryClient.invalidateQueries({ queryKey: [QUERY_HERITAGES] })
 		},
-		...options,
 	})
 }
 
@@ -60,3 +60,25 @@ export const useQueryHeritage = (
 		queryFn: () => fetchHeritage(id),
 		enabled: !!id && options?.enabled !== false,
 	})
+
+const deleteHeritage = async (id: string | number) => {
+	await axios.delete(`${URL}/${id}`)
+}
+
+export const useDeleteHeritage = (
+	id: string | number,
+	options?: UseMutationOptions<void, AxiosError, string | number>,
+) => {
+	const queryClient = useQueryClient()
+
+	return useMutation({
+		...options,
+		mutationKey: [DELETE_HERITAGE, id],
+		mutationFn: () => deleteHeritage(id),
+		onSuccess: async (...params) => {
+			options?.onSuccess?.(...params)
+
+			await queryClient.invalidateQueries({ queryKey: [QUERY_HERITAGES] })
+		},
+	})
+}

@@ -45,11 +45,13 @@ export const HeritagePage = () => {
 			<Box>
 				<Heading>{title}</Heading>
 			</Box>
-			<Flex gap={4} marginTop={5}>
-				<Image objectFit='contain' borderRadius={15} boxSize='300px' src={imageBlob} alt={title} />
+			<Flex gap={5} marginTop={7} alignItems={'flex-start'}>
+				<Box height={'100%'}>
+					<Image objectFit='contain' borderRadius={15} width={'300px'} src={imageBlob} alt={title} />
+				</Box>
 				<Text fontSize='lg'>{description}</Text>
 			</Flex>
-			<Text marginTop={5} fontSize='lg'>
+			<Text marginTop={7} fontSize='lg'>
 				Стаття була створена {getFormattedDate(dateOfCreation)} користувачем {username} (
 				<Link fontWeight={'bold'} href={`mailto:${email}`}>
 					{email}
