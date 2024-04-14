@@ -24,9 +24,9 @@ export const Header = () => {
 	}
 
 	return (
-		<Box bgColor={PRIMARY_COLOR} paddingBlock={3} as='header'>
+		<Box bgColor={PRIMARY_COLOR} paddingBlock={3} as='header' height={'64px'}>
 			<Container maxW='container.xl'>
-				<Flex justifyContent='space-between' alignItems='center' gap={5}>
+				<Flex justifyContent='space-between' height={'100%'} alignItems='center' gap={5}>
 					<Box>
 						<Link _hover={{ textDecoration: 'none' }} as={ReactRouterLink} to='/'>
 							<Heading as='h1' size='lg' color={'gray.100'}>
