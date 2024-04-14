@@ -38,11 +38,14 @@ export const Header = () => {
 						{isLoading || !isCheckingAuthFinished ? (
 							''
 						) : isAuthenticated ? (
-							<div className='flex items-center gap-3'>
+							<Flex alignItems='center' gap={2}>
+								<ButtonLink to='/add-heritage' colorScheme={'gray'}>
+									Додати статтю
+								</ButtonLink>
 								<Button onClick={handleLogout} type={'button'}>
 									Вийти
 								</Button>
-							</div>
+							</Flex>
 						) : (
 							<Flex alignItems='center' gap={2}>
 								<ButtonLink to='/login' colorScheme={'gray'}>
