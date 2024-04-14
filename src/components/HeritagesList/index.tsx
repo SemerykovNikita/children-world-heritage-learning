@@ -1,12 +1,35 @@
 import { Grid, GridItem } from '@chakra-ui/react'
-import { useEffect } from 'react'
+import { forwardRef, useEffect, useImperativeHandle } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useErrorToast } from '../../hooks/useErrorToast'
 import { useQueryHeritages } from '../../queries/heritage'
 import { HeritagesItem } from './HeritagesItem/index'
 import { HeritagesListSkeleton } from './HeritagesListSkeleton/index'
 
-export const HeritagesList = () => {
-	const { data: heritages = [], isLoading: areHeritagesLoading, error: heritagesError } = useQueryHeritages()
+export type HeritagesListRef = {
+	refetchHeritages: () => void
+}
+
+export const HeritagesList = forwardRef<HeritagesListRef>((_, ref) => {
+	const [searchParams] = useSearchParams()
+
+	const {
+		data: heritages = [],
+		isLoading: areHeritagesLoading,
+		error: heritagesError,
+		refetch: refetchHeritages,
+	} = useQueryHeritages(searchParams.get('search') ?? '')
+
+	// to be able to call refetchHeritages from the parent component
+	useImperativeHandle(
+		ref,
+		() => {
+			return {
+				refetchHeritages,
+			}
+		},
+		[refetchHeritages],
+	)
 
 	const showErrorToast = useErrorToast({
 		title: 'Помилка завантаження. Спробуйте пізніше.',
@@ -29,4 +52,4 @@ export const HeritagesList = () => {
 			))}
 		</Grid>
 	)
-}
+})

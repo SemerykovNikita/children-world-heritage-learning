@@ -34,15 +34,19 @@ export const useAddHeritage = (options?: UseMutationOptions<void, AxiosError, He
 	})
 }
 
-const fetchHeritages = async () => {
-	const { data: response } = await axios.get<Heritage[]>(URL)
+const fetchHeritages = async (search?: string) => {
+	console.log('fetchHeritages', search)
+	const { data: response } = await axios.get<Heritage[]>(`${URL}?q=${search ?? ''}`)
 	return response
 }
 
-export const useQueryHeritages = (options?: UseQueryOptions<Heritage[], AxiosError, Heritage[], string[]>) =>
+export const useQueryHeritages = (
+	search?: string,
+	options?: UseQueryOptions<Heritage[], AxiosError, Heritage[], string[]>,
+) =>
 	useQuery({
 		queryKey: [QUERY_HERITAGES],
-		queryFn: fetchHeritages,
+		queryFn: () => fetchHeritages(search),
 		...options,
 	})
 
