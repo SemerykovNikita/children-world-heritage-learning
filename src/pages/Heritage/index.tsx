@@ -61,18 +61,11 @@ export const HeritagePage = () => {
 				)}
 			</Flex>
 			<Flex gap={5} marginTop={7} alignItems={'flex-start'}>
-				<Box height={'100%'} border={'1px solid #bbb'} borderRadius={15} p={3}>
-					<Image
-						maxH={'300px'}
-						objectFit='contain'
-						borderRadius={15}
-						width={'300px'}
-						src={imageBlob}
-						alt={title}
-					/>
+				<Box flex={'0 1 30%'} border={'1px solid #bbb'} borderRadius={15} p={3}>
+					<Image w={'100%'} borderRadius={15} src={imageBlob} alt={title} />
 				</Box>
 
-				<Text whiteSpace={'pre-wrap'} overflowWrap={'break-word'} fontSize='lg'>
+				<Text flex={'0 1 70%'} whiteSpace={'pre-wrap'} overflowWrap={'break-word'} fontSize='lg'>
 					{description}
 				</Text>
 			</Flex>
