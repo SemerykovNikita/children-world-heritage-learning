@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useShallow } from 'zustand/react/shallow'
+import { Loader } from '../../../components/ui/Loader/index'
 import { useUserStore } from '../../../store/user'
 
 type Props = {
@@ -22,7 +23,7 @@ export const AuthRoute = ({ children }: Props) => {
 		if (!isLoading) if (!isAuthenticated && isCheckingAuthFinished) navigate('/login')
 	}, [isLoading, isCheckingAuthFinished, isAuthenticated, navigate])
 
-	if (isLoading || !isCheckingAuthFinished) return 'Loading...'
+	if (isLoading || !isCheckingAuthFinished) return <Loader />
 
 	return children
 }

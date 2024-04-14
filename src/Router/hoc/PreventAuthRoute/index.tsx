@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useShallow } from 'zustand/react/shallow'
+import { Loader } from '../../../components/ui/Loader/index'
 import { useUserStore } from '../../../store/user'
 
 export const PreventAuthRoute = ({ children }: { children: React.ReactNode }) => {
@@ -18,7 +19,7 @@ export const PreventAuthRoute = ({ children }: { children: React.ReactNode }) =>
 		if (!isLoading && isCheckingAuthFinished) if (isAuthenticated) navigate('/')
 	}, [isLoading, isCheckingAuthFinished, isAuthenticated, navigate])
 
-	if (isLoading || !isCheckingAuthFinished) return 'Loading...'
+	if (isLoading || !isCheckingAuthFinished) return <Loader />
 
 	return children
 }

@@ -1,8 +1,15 @@
-import { UseMutationOptions, UseQueryOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+	QueryKey,
+	UseMutationOptions,
+	UseQueryOptions,
+	useMutation,
+	useQuery,
+	useQueryClient,
+} from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import axios from '../http/index'
 import { Heritage } from '../types/index'
-import { CREATE_HERITAGE, QUERY_HERITAGES } from './queryKeys'
+import { CREATE_HERITAGE, QUERY_HERITAGE, QUERY_HERITAGES } from './queryKeys'
 
 const URL = '/heritages'
 
@@ -37,4 +44,19 @@ export const useQueryHeritages = (options?: UseQueryOptions<Heritage[], AxiosErr
 		queryKey: [QUERY_HERITAGES],
 		queryFn: fetchHeritages,
 		...options,
+	})
+
+const fetchHeritage = async (id: number | string) => {
+	const { data: response } = await axios.get<Heritage>(`${URL}/${id}`)
+	return response
+}
+
+export const useQueryHeritage = (
+	id: number | string,
+	options?: UseQueryOptions<Heritage, AxiosError, Heritage, QueryKey>,
+) =>
+	useQuery({
+		queryKey: [QUERY_HERITAGE, id],
+		queryFn: () => fetchHeritage(id),
+		enabled: !!id && options?.enabled !== false,
 	})

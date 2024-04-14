@@ -14,7 +14,7 @@ export const HeritagesItem = ({ heritage }: { heritage: Heritage }) => {
 				</CardBody>
 
 				<CardFooter>
-					<ButtonLink to={`/heritage/${heritage.id}`} colorScheme={COLOR_THEME}>
+					<ButtonLink to={`/heritages/${heritage.id}`} colorScheme={COLOR_THEME}>
 						Детальніше
 					</ButtonLink>
 				</CardFooter>
