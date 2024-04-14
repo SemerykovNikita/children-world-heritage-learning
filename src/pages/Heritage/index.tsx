@@ -56,7 +56,10 @@ export const HeritagePage = () => {
 						alt={title}
 					/>
 				</Box>
-				<Text fontSize='lg'>{description}</Text>
+
+				<Text whiteSpace={'pre-wrap'} overflowWrap={'break-word'} fontSize='lg'>
+					{description}
+				</Text>
 			</Flex>
 			<Text marginTop={7} fontSize='lg'>
 				Стаття була створена {getFormattedDate(dateOfCreation)} користувачем {username} (
