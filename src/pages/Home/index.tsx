@@ -28,7 +28,12 @@ export const HomePage = () => {
 				Об'єкти світової спадщини
 			</Heading>
 			<Flex alignItems={'center'} gap={3} mb={5}>
-				<Input maxW={300} value={searchRef.current} onChange={handleInputChange} />
+				<Input
+					placeholder='Пошук по всіх статтях...'
+					maxW={300}
+					value={searchRef.current}
+					onChange={handleInputChange}
+				/>
 				<Button isLoading={isListLoading} onClick={() => setSearch(searchRef.current)}>
 					Знайти
 				</Button>
