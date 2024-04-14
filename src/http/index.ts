@@ -1,6 +1,5 @@
 import _axios from 'axios'
-
-const API_URL: string = 'http://localhost:5000/'
+import { API_URL } from '../utils/constants'
 
 const axios = _axios.create({
 	withCredentials: true,

@@ -9,6 +9,7 @@ import {
 import { AxiosError } from 'axios'
 import axios from '../http/index'
 import { Heritage } from '../types/index'
+import { LIMIT } from '../utils/constants'
 import { CREATE_HERITAGE, DELETE_HERITAGE, QUERY_HERITAGE, QUERY_HERITAGES } from './queryKeys'
 
 const URL = '/heritages'
@@ -34,19 +35,31 @@ export const useAddHeritage = (options?: UseMutationOptions<void, AxiosError, He
 	})
 }
 
-const fetchHeritages = async (search?: string) => {
-	console.log('fetchHeritages', search)
-	const { data: response } = await axios.get<Heritage[]>(`${URL}?q=${search ?? ''}`)
-	return response
+export type FetchHeritagesResponse = {
+	data: Heritage[]
+	count: string | number
+}
+
+export type FetchHeritagesParams = {
+	search?: string
+	limit?: number
+	page?: number
+}
+
+const fetchHeritages = async (params?: FetchHeritagesParams) => {
+	const { data: response, headers } = await axios.get<Heritage[]>(
+		`${URL}?q=${params?.search ?? ''}&_page=${params?.page || 1}&_limit=${params?.limit || LIMIT}`,
+	)
+	return { data: response, count: headers['x-total-count'] }
 }
 
 export const useQueryHeritages = (
-	search?: string,
-	options?: UseQueryOptions<Heritage[], AxiosError, Heritage[], string[]>,
+	params?: FetchHeritagesParams,
+	options?: UseQueryOptions<FetchHeritagesResponse, AxiosError, FetchHeritagesResponse>,
 ) =>
 	useQuery({
-		queryKey: [QUERY_HERITAGES],
-		queryFn: () => fetchHeritages(search),
+		queryKey: [QUERY_HERITAGES, params?.search, params?.page, params?.limit],
+		queryFn: () => fetchHeritages(params),
 		...options,
 	})
 

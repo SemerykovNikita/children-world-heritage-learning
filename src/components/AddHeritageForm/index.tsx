@@ -30,7 +30,6 @@ export const AddHeritageForm = () => {
 		register,
 		handleSubmit,
 		reset,
-		getValues,
 		formState: { errors, isValid },
 	} = useAddHeritageForm()
 
@@ -79,10 +78,6 @@ export const AddHeritageForm = () => {
 				loadingText='Чекайте...'
 				colorScheme={COLOR_THEME}
 				variant='solid'
-				onClick={() => {
-					const values = getValues()
-					console.log(values)
-				}}
 			>
 				Створити
 			</Button>

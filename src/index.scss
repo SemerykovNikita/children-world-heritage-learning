@@ -110,3 +110,59 @@ main {
 span[class*='icon'] {
 	margin: 0;
 }
+.visually-hidden {
+	display: none;
+}
+
+.pagination {
+	margin-top: 50px;
+	overflow: hidden;
+	box-sizing: border-box;
+	border-radius: 15px;
+	border: 1px solid #c9c9c9;
+	font-size: 18px;
+	font-weight: 500;
+	display: flex;
+	align-items: center;
+	background-color: white;
+	color: black;
+
+	li {
+		display: flex;
+		align-items: center;
+		height: 100%;
+		transition: all 0.3s ease;
+		border-right: 1px solid #c9c9c9;
+		cursor: pointer;
+
+		&:hover {
+			background-color: rgb(43, 110, 178);
+			color: white;
+		}
+
+		&:last-child {
+			border-right: none;
+		}
+
+		&.disabled {
+			opacity: 0.75;
+		}
+
+		&.active {
+			background-color: rgb(43, 110, 178);
+			color: white;
+
+			&:hover {
+				background-color: #0e375b;
+			}
+		}
+
+		.page-link {
+			padding: 10px 12px;
+		}
+
+		a {
+			display: inline-block;
+		}
+	}
+}
