@@ -1,12 +1,16 @@
 import { Button, Flex, Heading, Input } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { HeritagesList, HeritagesListRef } from '../../components/HeritagesList/index'
+import { HeritagesList } from '../../components/HeritagesList/index'
 
 export const HomePage = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
-	const listRef = useRef<HeritagesListRef>(null)
 	const [isListLoading, setIsListLoading] = useState(false)
+
+	// searchRef is used to store the search value between renders (to prevent re-rendering when the search value is changed)
+	const searchRef = useRef(searchParams.get('search') ?? '')
+
+	const [search, setSearch] = useState(searchRef.current)
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value
@@ -14,6 +18,8 @@ export const HomePage = () => {
 		!value ? searchParams.delete('search') : searchParams.set('search', value)
 
 		setSearchParams(searchParams)
+
+		searchRef.current = value
 	}
 
 	return (
@@ -22,12 +28,12 @@ export const HomePage = () => {
 				Об'єкти світової спадщини
 			</Heading>
 			<Flex alignItems={'center'} gap={3} mb={5}>
-				<Input maxW={300} value={searchParams.get('search') ?? ''} onChange={handleInputChange} />
-				<Button isLoading={isListLoading} onClick={() => listRef && listRef.current?.refetchHeritages?.()}>
+				<Input maxW={300} value={searchRef.current} onChange={handleInputChange} />
+				<Button isLoading={isListLoading} onClick={() => setSearch(searchRef.current)}>
 					Знайти
 				</Button>
 			</Flex>
-			<HeritagesList setIsLoading={setIsListLoading} ref={listRef} />
+			<HeritagesList search={search} setIsLoading={setIsListLoading} />
 		</>
 	)
 }

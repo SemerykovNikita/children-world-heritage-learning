@@ -14,9 +14,10 @@ export type HeritagesListRef = {
 
 type Props = {
 	setIsLoading: (isLoading: boolean) => void
+	search?: string
 }
 
-export const HeritagesList = forwardRef<HeritagesListRef, Props>(({ setIsLoading }, ref) => {
+export const HeritagesList = forwardRef<HeritagesListRef, Props>(({ setIsLoading, search }, ref) => {
 	const [searchParams, setSearchParams] = useSearchParams()
 
 	const {
@@ -27,7 +28,7 @@ export const HeritagesList = forwardRef<HeritagesListRef, Props>(({ setIsLoading
 		isFetching: areHeritagesFetching,
 		isRefetching: areHeritagesRefetching,
 	} = useQueryHeritages({
-		search: searchParams.get('search') ?? '',
+		search: search ?? '',
 		limit: LIMIT,
 		page: searchParams.get('page') ? Number(searchParams.get('page')) : 1,
 	})
@@ -36,7 +37,7 @@ export const HeritagesList = forwardRef<HeritagesListRef, Props>(({ setIsLoading
 		setIsLoading(areHeritagesRefetching)
 	}, [areHeritagesRefetching, setIsLoading])
 
-	// to be able to call refetchHeritages from the parent component
+	// to be able to call refetchHeritages from the parent component if needed
 	useImperativeHandle(
 		ref,
 		() => {

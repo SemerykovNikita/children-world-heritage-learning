@@ -55,7 +55,7 @@ const fetchHeritages = async (params?: FetchHeritagesParams) => {
 
 export const useQueryHeritages = (
 	params?: FetchHeritagesParams,
-	options?: UseQueryOptions<FetchHeritagesResponse, AxiosError, FetchHeritagesResponse>,
+	options?: Partial<UseQueryOptions<FetchHeritagesResponse, AxiosError, FetchHeritagesResponse>>,
 ) =>
 	useQuery({
 		queryKey: [QUERY_HERITAGES, params?.search, params?.page, params?.limit],
